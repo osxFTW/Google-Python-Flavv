@@ -1,1 +1,2 @@
-print("ceva")
+print("First thing")
+print("The second one")
