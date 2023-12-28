@@ -44,4 +44,4 @@ df_final = pd.concat([df_final] + list(df_zile.values()), axis=1)
 #df_final.loc[len(df_final)] = ['TOTAL', total_value]
 
 #df_final.to_csv('rezultate.csv', index=False)
-#print(df_final.to_string(index=False))
+print(df_final.to_string(index=False))
