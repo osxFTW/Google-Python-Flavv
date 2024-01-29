@@ -37,48 +37,6 @@ def delete_line_by_task():
             print(f'Task-ul "{task_to_delete}" nu a fost gasit.')
             continue
 
-# def adauga_taskuri():
-#
-#     while True:
-#         gasit = True
-#         while gasit:
-#             nume = input('Introdu numele taskului: ')
-#             with open("./taskuri.txt", "r") as f:
-#                 taskuri_citite = []
-#                 for line in f.readlines():
-#                     taskuri_citite.append(line.strip())
-#                 for task in taskuri_citite:
-#                     if nume in task:
-#                         print("taskul exista deja")
-#                         break
-#                     else:
-#                         gasit = False
-#         dl = input('Introdu deadlineul: ')
-#         persoana = input('Introdu omul desemnat: ')
-#
-#         while True:
-#             categorie_task = input("Introduceti categoria task-ului: ")
-#             if categorie_task in categorii_citite:
-#                 break
-#             else:
-#                 print("Categoria nu exista")
-#
-#         with open('taskuri.txt', 'a') as file:
-#             file.write(f'{nume},{dl},{persoana},{categorie_task}\n')
-#
-#         flag = True
-#         while True:
-#             raspuns = input("Doriti sa continuati? Da/Nu: ")
-#             if raspuns.lower() == "nu":
-#                 flag = False
-#                 break
-#             elif raspuns.lower() == "da":
-#                 break
-#             else:
-#                 print("Raspunsul nu este valid")
-#                 continue
-#         if flag == False:
-#             break
 def adauga_taskuri():
    while True:
        path = "./taskuri.txt"

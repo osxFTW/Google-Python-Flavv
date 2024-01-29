@@ -1,0 +1,19 @@
+<!-- confirm_delete.html -->
+{% extends 'base.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Confirmare ștergere companie</title>
+</head>
+<body>
+    <div align="center">
+        <p class="text">Sigur doriți să ștergeți compania {{ company.name }}?</p>
+        <form method="post">
+            {% csrf_token %}
+            <input class="btn btn-success" type="submit" name="confirm_delete" value="Da, ștergeți">
+        </form>
+        <a class="btn btn-danger" href="{% url 'companies:lista_companii' %}">Anulează</a>
+    </div>
+</body>
+</html>
+{% endblock %}
