@@ -34,16 +34,13 @@ for zile in range(10,15):
         columns = row.find_all('td')
         data_zile[f'Ziua_{zile}'].append(columns[2].text.strip())
 
-    data_total = {'NR. CRT': [], 'Judet': [], f'Ziua_{zile}': []}
+    data = {'TOTAL': []}
 
-    for index, row in enumerate(table.find_all('tr')[45:], start=45):
+    for index, row in enumerate(table.find_all('tr')[45:], start=1):
         columns = row.find_all('td')
-        if len(columns) > 1:
-            df_final.at[index, f'{zile}_12'] = columns[1].text.strip()
-        else:
-            df_final.at[index, f'{zile}_12'] = None
+        data['TOTAL'].append(columns[1])  # Use a consistent NR. CRT across all dates
 
-    df_total = pd.DataFrame(data_total)
+    df_total = pd.DataFrame(data)
 
     df_zi = pd.DataFrame(data_zile)
     df_zi.columns = [f'{zile}_12']
@@ -53,6 +50,9 @@ for zile in range(10,15):
 
 #Lipeste primele 2 coloane facute in primul for cu coloanele pt fiecare luna
 df_final = pd.concat([df_final] + list(df_zile.values()), axis=1)
-#df_final = pd.merge(df_final, data_total, on=['NR. CRT', 'Judet'], how='left')
 
+#df_final.loc[len(df_final)] = [df_total]
+
+df_final.to_csv('rezultate.csv', index=False)
 print(df_final.to_string(index=False))
+#print(df_total.to_string(index=False))

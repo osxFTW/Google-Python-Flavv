@@ -1,5 +1,5 @@
 
-def ziValida(prima_cifra_an, a_doua_cifra_an, prima_cifra_luna, a_doua_cifra_luna, prima_cifra_zi, a_doua_cifra_zi):
+def dayValid(prima_cifra_an, a_doua_cifra_an, prima_cifra_luna, a_doua_cifra_luna, prima_cifra_zi, a_doua_cifra_zi):
     zi = ""
     zi += prima_cifra_zi
     zi += a_doua_cifra_zi
@@ -80,11 +80,13 @@ def cifra_de_control(cnp, cifra_control):
     else:
         return True
 
-cnp = input("Introdu CNP-ul tau: ")
+while True:
+    cnp = input("Introdu CNP-ul tau: ")
 
-cnp_list = list(cnp)
+    cnp_list = list(cnp)
 
-if len(cnp_list) == 13 and isGender(cnp_list[0]) and isMonth(cnp_list[3:5]) and cod_judet(cnp_list[7], cnp_list[8]) and cod_birouri_de_evidenta(cnp_list[9], cnp_list[10], cnp_list[11]) and cifra_de_control(cnp_list, cnp_list[12]):
-    print("Your CNP is valid.")
-else:
-    print("Your CNP is invalid.")
+    if len(cnp_list) == 13 and isGender(cnp_list[0]) and isMonth(cnp_list[3:5]) and dayValid(cnp_list[1], cnp_list[2], cnp_list[3], cnp_list[4], cnp_list[5], cnp_list[6]) and cod_judet(cnp_list[7], cnp_list[8]) and cod_birouri_de_evidenta(cnp_list[9], cnp_list[10], cnp_list[11]) and cifra_de_control(cnp_list, cnp_list[12]):
+        print("Your CNP is valid.")
+        break
+    else:
+        print("Your CNP is invalid.")
