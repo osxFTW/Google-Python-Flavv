@@ -22,9 +22,9 @@ class LocationForm(forms.ModelForm):
         city_value = self.cleaned_data.get('city')
         country_value = self.cleaned_data.get('country')
         if self.pk:
-            if Location.object.filter(city__icontains=city_value, country__icontains=country_value).exclude(id=self.pk).exists():
+            if Location.objects.filter(city__icontains=city_value, country__icontains=country_value).exclude(id=self.pk).exists():
                 self._errors['city'] = self.error_class(['Orasul si tara deja exista'])
         else:
-            if Location.object.filter(city__icontains=city_value, country__icontains=country_value).exists():
+            if Location.objects.filter(city__icontains=city_value, country__icontains=country_value).exists():
                 self._errors['city'] = self.error_class(['Orasul si tara deja exista'])
         return self.cleaned_data
