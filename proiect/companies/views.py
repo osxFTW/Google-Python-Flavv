@@ -22,13 +22,13 @@ class CreateCompanyView(CreateView):
     def get_success_url(self):
         return reverse('companies:lista_companii')
 
-class UpdateCompanyView(UpdateView):
-    model = Companies
-    fields = ['name', 'website', 'company_type', 'location']
-    template_name = 'companies/location_form.html'
-
-    def get_success_url(self):
-        return reverse('companies:lista_companii')
+# class UpdateCompanyView(UpdateView):
+#     model = Companies
+#     fields = ['name', 'website', 'company_type', 'location']
+#     template_name = 'companies/location_form.html'
+#
+#     def get_success_url(self):
+#         return reverse('companies:lista_companii')
 
 class UpdateCompanyView(UpdateView):
     model = Companies

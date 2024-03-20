@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="margin: 20px 125px;">
+        <div style="display: inline-flex;
+                        text-align: center;">
+            <a class="btn btn-primary" style="margin-bottom: 10px;" href="{% url 'NotesApp:adaugare' %}">Add Notes</a>
+            <h2 class="title-decor" style="margin-left: 400px;
+                                        margin-bottom: 10px;">Notes List</h2>
+        </div>
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Notes Name</th>
+                <th>Note description</th>
+                <th>Created at</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in lista_notes %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.text }}</td>
+                    <td>{{ item.created_at }}</td>
+                    <td>
+                        <a class="btn btn-success" href="{% url 'NotesApp:modificare' item.id %}">Modify</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock %}
+
