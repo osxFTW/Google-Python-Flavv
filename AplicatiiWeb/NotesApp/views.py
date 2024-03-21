@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView
@@ -8,12 +9,12 @@ from NotesApp.models import Notes
 
 # Create your views here.
 
-class NotesView(ListView):
+class NotesView(LoginRequiredMixin, ListView):
     model = Notes
     template_name = 'NotesApp/notes_index.html'
     context_object_name = 'lista_notes'
 
-class CreateNotesView(CreateView):
+class CreateNotesView(LoginRequiredMixin, CreateView):
 
     model = Notes
     # fields = ['name', 'text']
@@ -28,7 +29,7 @@ class CreateNotesView(CreateView):
     def get_success_url(self):
         return reverse('NotesApp:lista_notes')
 
-class UpdateNotesView(UpdateView):
+class UpdateNotesView(LoginRequiredMixin, UpdateView):
     model = Notes
     # fields = ['name', 'text']
     form_class = NotesForm
