@@ -5,7 +5,7 @@ from authentication import views
 
 urlpatterns =[
     path('', views.auth_user_view, name="login"),
-    path('signup', views.signup, name="signup"),
+    path('register/', views.register, name="register"),
     path('notes/', include('NotesApp.urls'), name='notes'),
     path('', include('django.contrib.auth.urls'), {'next_page': '/'}, name='login'),
 ]

@@ -7,23 +7,25 @@
     </div>
     <form method="POST">
         {% csrf_token %}
-        <h3>Login Here</h3>
+        <h3>Register here</h3>
 
         <label>Username</label>
-        <input class="form-control" name="username" type="text" placeholder="Enter username" >
+        <input class="form-control" name="username" type="text" placeholder="Enter username" required>
 
         <label>Password</label>
-        <input class="form-control" name="password" type="password" placeholder="Password">
-        <div class="pass-reg">
-        <a class="forgot-pass" href="{% url 'password_reset' %}" style="color: darkslategrey;">Forgot password?</a>
-        <a class="btn-register" href='/register'>Register</a>
-        </div>
-        <button type="submit">Login</button>
+        <input class="form-control" name="password" type="password" placeholder="Password" required>
+
+        <label>Email</label>
+        <input class="form-control" name="email" type="email" placeholder="Email address" required>
+
+        <a class="btn-login" href='/login'>Login</a>
+        <button type="submit">Register</button>
         {% for message in messages %}
             <div class="alert alert-{{ message.tag }} alert-dismissible fade show" role="alert">
             {{ message }}
             </div>
         {% endfor %}
+        <span class="errors">{{ form.non_field_errors }}</span><br>
     </form>
 
 
@@ -32,32 +34,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <!--Stylesheet-->
     <style>
-
         .alert{
             font-size: 16px;
+            margin-bottom: 25px;
             text-align: center;
             width: 375px;
         }
+
         .errors{
             color: black;
             font-size: 14px;
             margin-top: 5px;
         }
 
-        .pass-reg{
-            display: flex;
-            margin-top: 5px;
+        .btn-login{
+            margin-top: 10px;
+            margin-left: 270px;
         }
-        .btn-register{
-            margin-left: auto;
-        }
-
-        .forgot-pass:hover{
-            text-decoration: none;
-            color: grey;
-        }
-
-        .btn-register:hover{
+        .btn-login:hover{
             text-decoration: none;
             color: black;
         }
@@ -101,7 +95,7 @@
     bottom: -80px;
 }
 form{
-    height: 520px;
+    height: 560px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
