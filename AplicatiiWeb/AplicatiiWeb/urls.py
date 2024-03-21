@@ -23,5 +23,6 @@ urlpatterns = [
     path('notes/', include('NotesApp.urls'), name='notes'),
     # path('', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('', include('authentication.urls'), name='authentication'),
+    path('home/', include('homepage.urls'), name='home'),
     path('', include('django.contrib.auth.urls'), {'next_page': '/'}, name='login'),
 ]

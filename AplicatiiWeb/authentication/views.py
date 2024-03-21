@@ -3,7 +3,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 
 from AplicatiiWeb import settings
 
@@ -57,12 +56,12 @@ def auth_user_view(request):
 
         if user is not None:
             login(request, user=user)
-            # return render(request, 'NotesApp/notes_index.html')
-            return redirect('/notes/')
+            # return render(request, 'NotesApp/notes_index.html', {'username': username})
+            return redirect('/home/',)
 
         else:
             messages.info(request, 'Username or password is incorrect!')
 
     context = {}
-    return render(request, 'registration/login.html', context)
+    return render(request, 'registration/login.html')
 
