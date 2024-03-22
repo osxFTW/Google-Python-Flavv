@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div style="margin: 20px 125px;">
+
+    <div style="margin: 10px 125px 100px;
+                margin-top: 75px;">
+                        <h2 class="animate-charcter" style="text-align: center;">Notes List</h2>
         <div style="display: inline-flex;
                         text-align: center;">
-            <a class="button-29" style="margin-bottom: 10px;" href="{% url 'NotesApp:adaugare' %}">Add Notes</a>
-            <h2 class="title-decor" style="margin-left: 400px;
-                                        margin-bottom: 10px;">Notes List</h2>
+            <a class="button-81" style="margin-bottom: 10px;" href="{% url 'NotesApp:adaugare' %}">Add Notes</a>
         </div>
         <table class="table">
         <thead>
@@ -14,7 +15,7 @@
                 <th>Notes Name</th>
                 <th>Note description</th>
                 <th>Created at</th>
-                <th>Actions</th>
+                <th style="width: 220px;text-align: center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                     <td>{{ item.created_at }}</td>
                     <td>
                         <a class="button-33" href="{% url 'NotesApp:modificare' item.id %}">Modify</a>
+                        <a class="button-24" href="{% url 'NotesApp:delete' item.id %}">Delete</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -33,20 +35,23 @@
         </table>
     </div>
 
-   <style>
-   table {
 
+   <style>
+
+   table {
   width: 800px;
   border-collapse: collapse;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+
 }
 
-th,
-td {
-  padding: 15px;
-  background-color: rgba(255,255,255,0.2);
-  color: #000000;
+
+td{
+  padding: 20px;
+    color: white;
+    max-width: 400px;
+    word-wrap: break-word;
 }
 
 .button-33 {
@@ -58,7 +63,7 @@ td {
   cursor: pointer;
   display: inline-block;
   font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
-  padding: 7px 20px;
+  padding: 9px 20px;
   text-align: center;
   text-decoration: none;
   transition: all 250ms;
@@ -67,60 +72,46 @@ td {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+    margin-right: 15px;
 }
 
 .button-33:hover {
   box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
   transform: scale(1.05) rotate(-1deg);
     text-decoration: none;
+    color: green;
 }
 
-.button-29 {
-    margin-top: 100px;
-  align-items: center;
-  appearance: none;
-  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
-  border: 0;
-  border-radius: 6px;
-  box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
+
+.button-81 {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 0 solid #e2e8f0;
+  border-radius: 1.5rem;
   box-sizing: border-box;
-  color: #fff;
+  color: #0d172a;
   cursor: pointer;
-  display: inline-flex;
-  font-family: "JetBrains Mono",monospace;
-  height: 48px;
-  justify-content: center;
+  display: inline-block;
+  font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.1rem;
+  font-weight: 600;
   line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 16px;
-  padding-right: 16px;
-  position: relative;
-  text-align: left;
-  text-decoration: none;
-  transition: box-shadow .15s,transform .15s;
+  padding: 10px 17px;
+  text-align: center;
+  text-decoration: none #be0fd3 solid;
+  text-decoration-thickness: auto;
+  transition: all .1s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  white-space: nowrap;
-  will-change: box-shadow,transform;
-  font-size: 18px;
 }
 
-.button-29:focus {
-  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
-}
-
-.button-29:hover {
-  box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
-  transform: translateY(-2px);
+.button-81:hover {
+  background-color: #244f3d;
+  color: #fff;
     text-decoration: none;
 }
 
-.button-29:active {
-  box-shadow: #3c4fe0 0 3px 7px inset;
-  transform: translateY(2px);
-}
 
 .button-24 {
   background: #FF4742;
@@ -133,7 +124,7 @@ td {
   display: inline-block;
   font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 850;
   line-height: 16px;
   min-height: 40px;
   outline: 0;
@@ -152,6 +143,7 @@ td {
   background-color: initial;
   background-position: 0 0;
   color: #FF4742;
+    text-decoration: none;
 }
 
 .button-24:active {
@@ -165,14 +157,14 @@ th {
 
 thead {
   th {
-    background-color: #55608f;
+    background-color: #244f3d;
   }
 }
 
 tbody {
   tr {
     &:hover {
-      background-color: rgba(255,255,255,0.3);
+      background-color: rgba(255,255,255,0.2);
     }
   }
   td {
@@ -185,16 +177,44 @@ tbody {
         right: 0;
         top: -9999px;
         bottom: -9999px;
-        background-color: rgba(255,255,255,0.2);
+        background-color: rgba(255,255,255,0.1);
         z-index: -1;
       }
     }
   }
 }
-body{
-    background-color: rgba(109,202,255,0.42);
 
+.animate-charcter
+{
+    margin-bottom: 30px;
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #FFFFFF 0%,
+    #ffffff 29%,
+    #117fce 60%,
+    #231557 100%
+  );
+
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 10s linear infinite;
+  display: block;
+    text-align: center;
+      font-size: 40px;
 }
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
    </style>
 
 {% endblock %}

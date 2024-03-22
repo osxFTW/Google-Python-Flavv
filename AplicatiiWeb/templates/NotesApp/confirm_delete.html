@@ -1,0 +1,36 @@
+<!-- confirm_delete.html -->
+{% extends 'base.html' %}
+{% block content %}
+<html>
+<head>
+    <title>Confirm your delete request</title>
+</head>
+<body>
+    <div class="content" align="center">
+        <div>
+        <p class="text">Do you want to delete </p><p style="color: red;
+                                                            margin-left: 5px">"{{ note.name }}"</p>?
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <input class="btn btn-success" type="submit" name="confirm_delete" value="Yes, delete it.">
+        </form>
+        <a class="btn btn-danger" href="{% url 'NotesApp:lista_notes' %}">Cancel</a>
+    </div>
+</body>
+</html>
+    <style>
+
+    body{
+        background: linear-gradient(45deg, transparent 22%, rgb(240, 230, 255) 49% 51%, transparent 21%) , linear-gradient(-45deg, transparent 22%, rgb(240, 230, 255) 49% 51%, transparent 21%);
+        background-size: 5em 5em;
+        background-color: rgb(224, 204, 255);
+    }
+    .content{
+        margin-top: 40px;
+    }
+    p{
+        display: inline-flex;
+    }
+    </style>
+{% endblock %}

@@ -57,7 +57,7 @@ def auth_user_view(request):
         if user is not None:
             login(request, user=user)
             # return render(request, 'NotesApp/notes_index.html', {'username': username})
-            return redirect('/notes/',)
+            return redirect('/notes/')
 
         else:
             messages.info(request, 'Username or password is incorrect!')

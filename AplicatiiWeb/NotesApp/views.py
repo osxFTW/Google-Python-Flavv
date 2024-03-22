@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView
 
@@ -42,4 +42,17 @@ class UpdateNotesView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('NotesApp:lista_notes')
+
+
+def delete(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+
+    if request.method == "POST":
+        if 'confirm_delete' in request.POST:
+            note.delete()
+            return redirect('NotesApp:lista_notes')
+        else:
+            return redirect('NotesApp:lista_notes')
+
+    return render(request, 'NotesApp/confirm_delete.html', {'note': note})
 

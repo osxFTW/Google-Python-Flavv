@@ -10,10 +10,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <nav class="nav-container">
-                        <a class="btn" href="/admin/">Admin</a>
+                        <a class="btn admin" href="/admin/">Admin</a>
                         {% if request.user.is_authenticated %}
-                        <a class="btn" href="/home/">Home</a>
-                        <a class="btn" href="/notes/">Notes</a>
+                        <a class="btn home" href="/home/">Home</a>
+                        <a class="btn" href="/notes/">NotesApp</a>
                             <p class="logout-form">Hello, {{ username }}</p>
                             <form class="logout-form" method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
@@ -24,24 +24,78 @@
                 </div>
             </div>
         </div>
-    {% block content %}
+
+        <div class="content">
+        {% block content %}
     {% endblock %}
+        </div>
+
+    <div class="footer">
+            <p>2024 This Website is made by Golita Flavius.</p>
+        </div>
+
     </body>
 
     <style>
+
+        .home{
+            margin-left: 100px;
+        }
+
+        .footer{
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: #0d172a;
+            text-align: center;
+        }
 
         p{
             margin-left: auto;
             margin-top: 7px;
         }
 
+        .content{
+            padding-top: 50px;
+        }
+
         .nav-container{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
             display: flex;
+            padding-top: 5px;
+            height: 50px;
+            box-shadow: 0 0 10px 0 rgb(0,0,0,0.4);
+            z-index: 1000;
         }
         .nav-container a{
             margin-right: 10px; /* Spațiere între elemente */
         }
 
+              body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
 
     </style>
 </html>
