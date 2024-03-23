@@ -43,7 +43,7 @@ def register(request):
         # from_email = settings.EMAIL_HOST_USER
         # to_list = [myuser.email]
         #
-        return render(request, 'registration/login.html')
+        return redirect('/login')
 
     return render(request, 'registration/register.html')
 
@@ -57,7 +57,7 @@ def auth_user_view(request):
         if user is not None:
             login(request, user=user)
             # return render(request, 'NotesApp/notes_index.html', {'username': username})
-            return redirect('/notes/')
+            return render(request, 'homepage/home_index.html')
 
         else:
             messages.info(request, 'Username or password is incorrect!')

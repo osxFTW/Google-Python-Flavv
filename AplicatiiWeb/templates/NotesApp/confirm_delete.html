@@ -16,10 +16,20 @@
             <input class="btn btn-success" type="submit" name="confirm_delete" value="Yes, delete it.">
         </form>
         <a class="btn btn-danger" href="{% url 'NotesApp:lista_notes' %}">Cancel</a>
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tag }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            </div>
+        {% endfor %}
     </div>
 </body>
 </html>
     <style>
+
+    .alert{
+        color: black;
+        margin-left: 40px;
+    }
 
     body{
         background: linear-gradient(45deg, transparent 22%, rgb(240, 230, 255) 49% 51%, transparent 21%) , linear-gradient(-45deg, transparent 22%, rgb(240, 230, 255) 49% 51%, transparent 21%);

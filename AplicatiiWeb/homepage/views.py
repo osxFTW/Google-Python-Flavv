@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-@login_required
+@login_required(login_url='/login/')
 def HomeView(request):
     template_name = 'homepage/home_index.html'
 
