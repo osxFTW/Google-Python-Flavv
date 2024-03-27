@@ -17,19 +17,19 @@ def register(request):
 
         if User.objects.filter(username=username):
             messages.error(request, "Username already exist!")
-            return redirect('register')
+            return redirect("../register")
 
         if User.objects.filter(email=email):
             messages.error(request, "Email already used!")
-            return redirect('register')
+            return redirect('../register/')
 
         if len(username)>20:
             messages.error(request,f"Username is too big!")
-            return redirect('register')
+            return redirect('../register/')
 
         if not username.isalnum():
             messages.error(request,"Username must contain letters!")
-            return redirect('register')
+            return redirect('../register/')
 
         myuser = User.objects.create_user(username=username, email=email, password=password)
         myuser.save()

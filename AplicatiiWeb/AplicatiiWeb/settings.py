@@ -25,20 +25,24 @@ SECRET_KEY = 'django-insecure-6#owo(a^re6@$*i15tif_0)kp*a)#oig=a_ne=d&5+74%9iq1a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['myproject.playit.gg', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'NotesApp',
     'authentication',
+    'NotesApp',
+    'homepage',
+    'chat',
+    'quizapp',
 ]
 
 MIDDLEWARE = [
@@ -66,6 +70,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'my_templatetag': 'quizapp.templatetag.my_templatetag'
+            }
         },
     },
 ]

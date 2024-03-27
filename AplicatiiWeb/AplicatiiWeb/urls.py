@@ -23,6 +23,8 @@ urlpatterns = [
     path('notes/', include('NotesApp.urls'), name='notes'),
     # path('', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('login/', include('authentication.urls'), name='login'),
+    path('quiz/', include('quizapp.urls'), name='quiz'),
+    path('chat/', include('chat.urls'), name='chat'),
     path('', include('homepage.urls'), name='home'),
     path('', include('django.contrib.auth.urls'), {'next_page': '/'}, name='logout'),
 

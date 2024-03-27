@@ -12,7 +12,3 @@ class Notes(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.text} {self.created_at}"
-
-
-
-

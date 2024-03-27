@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start quiz</title>
+</head>
+<body>
+    <style>
+        .correct{ background-color: green; }
+        .incorrect{ background-color: red; }
+    </style>
+
+    {% for item in questions_with_answers %}
+    <div class="question-container" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
+        <h1>Question {{ forloop.counter }}/5:</h1>
+        <p>{{ item.question.text_quiz }}</p>
+        <ul class="answers-list">
+            {% for answer in item.answers %}
+                <li><button class="answer-button" data-correct-answer="{{ item.question.correct_answer }}">{{ answer }}</button></li>
+            {% endfor %}
+        </ul>
+        <div class="message"></div>
+    </div>
+{% endfor %}
+
+    <script>
+        // Cod JavaScript pentru manipularea afișării întrebărilor și răspunsurilor
+
+        var questionContainers = document.querySelectorAll('.question-container');
+        var currentQuestionIndex = 0;
+
+        var answerButtons = document.querySelectorAll('.answer-button');
+
+        answerButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var selectedAnswer = this.textContent;
+                var correctAnswer = this.getAttribute('data-correct-answer');
+                console.log("Correct Answer:", correctAnswer); // Adaugă această linie pentru debugare
+
+
+                var messageElement = this.closest('.question-container').querySelector('.message');
+                var currentQuestionContainer = this.closest('.question-container');
+
+                if (selectedAnswer === correctAnswer) {
+                    showMessage(messageElement, 'Răspuns corect!');
+                    this.classList.remove('incorrect');
+                    this.classList.add('correct'); // Adaugă clasa 'correct' butonului
+                } else {
+                    showMessage(messageElement, 'Răspuns greșit! Răspunsul corect este: ' + correctAnswer);
+                    this.classList.remove('correct');
+                    this.classList.add('incorrect'); // Adaugă clasa 'incorrect' butonului
+                }
+
+                currentQuestionContainer.style.pointerEvents = 'none'; // Dezactivează click-urile butoanelor după răspuns
+
+                var nextQuestionContainer = currentQuestionContainer.nextElementSibling;
+                if (nextQuestionContainer) {
+                    nextQuestionContainer.style.display = 'block';  // Afișează următoarea întrebare
+                } else {
+                    alert('Quiz-ul a luat sfârșit!');
+                }
+            });
+        });
+
+        function showMessage(element, message) {
+            element.textContent = message;
+        }
+    </script>
+
+</body>
+</html>
+
+{% endblock %}

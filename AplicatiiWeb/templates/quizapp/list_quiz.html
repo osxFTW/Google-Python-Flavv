@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List quiz</title>
+</head>
+<body>
+    <div style="margin: 10px 125px 100px;
+                margin-top: 40px;">
+                        <h2 class="animate-charcter" style="text-align: center;
+                                                           margin-bottom: 40px;">Quiz List</h2>
+    <div class="table-container">
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Quiz Name</th>
+                <th>Answers</th>
+                <th>Created at</th>
+                <th style="text-align: center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in list_quiz %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ question.text_quiz }}</td>
+                    <td>
+                        <ul>
+                            {% for answer in question.answer_set.all %}
+                                <li>{{ answer.text_answer }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ question.created_at }}</td>
+                    <td style="text-align: center">
+                        <a class="button-33" href="{% url 'quizapp:modify' question.id %}">Modify</a>
+                        <a class="button-24" href="{% url 'quizapp:delete' question.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn btn-outline-primary">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Previous</a>
+            {% endif %}
+
+            <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Last &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+<style>
+
+        .pagination {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination a {
+            height: 40px;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #2fa16f;
+            border-radius: 4px;
+            margin: 0 4px;
+            transition: background-color 0.3s;
+            background-color: #2fa16f;
+        }
+
+        .pagination a:hover {
+            background-color: #5ad943;
+            border-color: #5ad943;
+        }
+
+        .pagination .current {
+            color: #5ad943;
+            background-color: #fff;
+            border: 1px solid #5ad943;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin: 0 4px;
+            height: 40px;
+        }
+
+
+        .table-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70%;
+        }
+
+    table {
+        max-width: 80%;
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+
+    .button-24 {
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+    min-height: 40px;
+
+  outline: 0;
+    margin-left: 0;
+  padding: 10px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-24:hover,
+.button-24:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+    text-decoration: none;
+}
+
+.button-24:active {
+  opacity: .5;
+}
+
+    .button-33 {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 9px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: none;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+    margin-right: 15px;
+}
+
+.button-33:hover {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+    text-decoration: none;
+    color: green;
+}
+
+td{
+    color: white;
+    word-wrap: break-word;
+}
+
+th {
+    color: #FFFFFF;
+  text-align: left;
+}
+
+
+thead {
+  th {
+    background-color: #2fa16f;
+  }
+}
+
+tbody {
+  tr {
+    &:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+  }
+  td {
+    position: relative;
+    &:hover {
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -9999px;
+        bottom: -9999px;
+        background-color: rgba(255,255,255,0.1);
+        z-index: -1;
+      }
+    }
+  }
+}
+
+.animate-charcter
+{
+    margin-top: 30px;
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #32e363 0%,
+    #5ad943 29%,
+    #ce117c 60%,
+    #231557 100%
+  );
+
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 10s linear infinite;
+    display: block;
+    text-align: center;
+    font-size: 40px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+</style>
+
+</body>
+</html>
+{% endblock %}

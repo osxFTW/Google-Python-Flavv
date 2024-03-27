@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuizApp</title>
+</head>
+<body>
+    <div class="container-quiz">
+        <a href="{% url 'quizapp:add_quiz' %}" class="btn-quiz">Add question</a>
+        <a href="list_quiz/" class="btn-quiz">List of quiz</a>
+        <a href="start_quiz/" class="btn-quiz">Start the quiz</a>
+
+    </div>
+
+<style>
+    .container-quiz{
+        text-align: center;
+        display: block;
+        margin-top: 200px;
+    }
+
+    .btn-quiz{
+        padding-right: 20px;
+    }
+
+</style>
+
+</body>
+</html>
+{% endblock %}

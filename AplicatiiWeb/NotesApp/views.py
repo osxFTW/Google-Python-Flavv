@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -48,6 +48,7 @@ class UpdateNotesView(LoginRequiredMixin, UpdateView):
         return reverse('NotesApp:lista_notes')
 
 
+@login_required
 def delete(request, pk):
     note = get_object_or_404(Notes, pk=pk)
 

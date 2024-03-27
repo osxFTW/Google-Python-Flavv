@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="col-md-12">
+        <h2 class="add_quiz"> Add the quiz</h2>
+        <form class="form" method="post">
+    {% csrf_token %}
+    <p>{{ form.as_p }} </p>
+    {{ answer_formset.management_form }}
+            <table>
+        <p style="margin-bottom: 5px;">Answers</p>
+        <p style="margin-top: 5px; font-size: 14px;">Check the correct one</p>
+        {% for form in answer_formset %}
+            <tr>
+                <td>
+                    {{ form.text_answer }}
+                    {{ form.is_correct }}
+                    <label class="form-check-label" for="{{ form.is_correct.id }}">Correct</label>
+                </td>
+
+            </tr>
+        {% endfor %}
+    </table>
+    <button type="submit">Save</button>
+</form>
+    </div>
+
+<style>
+
+
+    .form button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #2fa16f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .form p {
+            margin-bottom: 10px;
+        }
+
+        .form table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .form table td {
+            padding: 8px;
+        }
+
+        .form button[type="submit"]:hover {
+            background-color: #5ad943;
+        }
+
+
+    table{
+        margin-left: 123px;
+    }
+
+    .add_quiz{
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .form{
+        margin-left: 38%;
+        margin-top: 25px;
+        width: 450px;
+        text-align: center;
+    }
+</style>
+</body>
+</html>
+
+{% endblock %}
