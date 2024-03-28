@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <p>Total Questions: {{ total_questions }}</p>
+    <p>Correct Answers: {{ correct_answers }}</p>
+    <p>Score Percentage: {{ score_percentage }}%</p>
+</body>
+</html>
+
+{% endblock %}

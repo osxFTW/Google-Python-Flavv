@@ -10,13 +10,16 @@
 <body>
     <div class="col-md-12">
         <h2 class="add_quiz"> Add the quiz</h2>
+    <div style="display: flex;
+            justify-content: center;
+            align-items: center;">
         <form class="form" method="post">
     {% csrf_token %}
     <p>{{ form.as_p }} </p>
     {{ answer_formset.management_form }}
             <table>
         <p style="margin-bottom: 5px;">Answers</p>
-        <p style="margin-top: 5px; font-size: 14px;">Check the correct one</p>
+        <p style="margin-top: 5px; font-size: 14px;">Check only one!</p>
         {% for form in answer_formset %}
             <tr>
                 <td>
@@ -30,6 +33,7 @@
     </table>
     <button type="submit">Save</button>
 </form>
+    </div>
     </div>
 
 <style>
@@ -74,7 +78,6 @@
     }
 
     .form{
-        margin-left: 38%;
         margin-top: 25px;
         width: 450px;
         text-align: center;

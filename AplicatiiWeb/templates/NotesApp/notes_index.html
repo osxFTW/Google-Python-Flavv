@@ -2,48 +2,107 @@
 {% block content %}
 
     <div style="margin: 10px 125px 100px;
-                margin-top: 75px;">
+                margin-top: 25px">
                         <h2 class="animate-charcter" style="text-align: center;">Notes List</h2>
         <div style="display: inline-flex;
                         text-align: center;">
             <a class="button-81" style="margin-bottom: 10px;" href="{% url 'NotesApp:adaugare' %}">Add Notes</a>
         </div>
-        <table class="table">
-        <thead>
-            <tr>
-                <th>Index</th>
-                <th>Notes Name</th>
-                <th>Note description</th>
-                <th>Created at</th>
-                <th style="width: 240px;text-align: center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in lista_notes %}
+        <div style="justify-content: center; display: flex; align-items: center">
+            <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.text }}</td>
-                    <td>{{ item.created_at }}</td>
-                    <td>
-                        <a class="button-33" href="{% url 'NotesApp:modificare' item.id %}">Modify</a>
-                        <a class="button-24" href="{% url 'NotesApp:delete' item.id %}">Delete</a>
-                    </td>
+                    <th>Notes ID
+                        <a href="?sort=id">Sort</a>
+                    </th>
+                    <th>Notes Name
+                        <a href="?sort=namee">Sort</a>
+                    </th>
+                    <th>Note description</th>
+                    <th>Created at
+                        <a href="?sort=created_at">Sort</a>
+                    </th>
+                    <th style="width: 240px;text-align: center">Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-        </table>
+            </thead>
+            <tbody>
+                {% for item in lista_notes %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.text }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>
+                            <a class="button-33" href="{% url 'NotesApp:modificare' item.id %}">Modify</a>
+                            <a class="button-24" href="{% url 'NotesApp:delete' item.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            </div>
+
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page=1" class="btn btn-outline-primary">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">Previous</a>
+            {% endif %}
+
+            <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-primary">Last &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+        </div>
     </div>
 
 
    <style>
 
+   .pagination {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination a {
+            height: 40px;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #107336;
+            border-radius: 4px;
+            margin: 0 4px;
+            transition: background-color 0.3s;
+            background-color: rgba(11, 89, 27, 0.69);
+        }
+
+        .pagination a:hover {
+            background-color: #28c571;
+            border-color: #26b67a;
+        }
+
+        .pagination .current {
+            color: #107336;
+            background-color: #fff;
+            border: 1px solid #107336;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin: 0 4px;
+            height: 40px;
+        }
+
    table {
-  width: 800px;
+       max-width: 90%;
   border-collapse: collapse;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0,0,0,0.4);
-
 }
 
 
@@ -58,7 +117,7 @@ td{
 
   background-color: #c2fbd7;
   border-radius: 100px;
-  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  box-shadow: rgba(44, 187, 99, 0.2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
   color: green;
   cursor: pointer;
   display: inline-block;
@@ -104,6 +163,7 @@ td{
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+    margin-left: 95px;
 }
 
 .button-81:hover {
@@ -188,7 +248,7 @@ tbody {
 
 .animate-charcter
 {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
    text-transform: uppercase;
   background-image: linear-gradient(
     -225deg,

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test, login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -16,6 +16,32 @@ class NotesView(LoginRequiredMixin, ListView):
     model = Notes
     template_name = 'NotesApp/notes_index.html'
     context_object_name = 'lista_notes'
+    paginate_by = 8
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        sort_param = self.request.GET.get('sort')
+
+        if sort_param == 'id':
+            queryset = queryset.order_by('id')
+
+        if sort_param == 'namee':
+            queryset = queryset.order_by('name')
+
+        if sort_param == 'date':
+            queryset = queryset.order_by('created_at')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page_obj = context['page_obj']
+
+        context['has_previous'] = page_obj.has_previous()
+        context['has_next'] = page_obj.has_next()
+
+        # Obținem toate răspunsurile și le adăugăm în context
+        return context
 
 class CreateNotesView(LoginRequiredMixin, CreateView):
     login_url = "../login"

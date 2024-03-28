@@ -10,67 +10,216 @@
 </head>
 <body>
     <style>
-        .correct{ background-color: green; }
-        .incorrect{ background-color: red; }
+
+h1 {
+    margin-top: 100px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#quizContainer {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.questionContainer {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: rgba(46, 132, 236, 0.15);
+}
+
+.questionContainer p {
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+}
+
+.answerLink {
+    background-color: rgba(157, 194, 250, 0.6);
+    display: block;
+    padding: 5px 15px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.answerLink:hover {
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+}
+
+.answerLink.selected {
+    background-color: #cceeff;
+}
+
+#nextButton, #submitButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#nextButton:hover, #submitButton:hover {
+    background-color: #0056b3;
+}
+
+        .answerLink.selected {
+        background-color: rgba(10, 124, 238, 0.87); /* Schimbați culoarea de fundal pentru butonul selectat */
+}
+        #retry{
+            margin-top: 25px;
+            text-align: center;
+            width: 150px;
+            height: 40px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+        }
+
+        .content-align{
+            display: flex;
+        justify-content: center;
+        align-items: center;
+            margin-top: 20px;
+        }
+        #retry:hover{
+            text-decoration: none;
+            background-color: #0056b3;
+        }
+
     </style>
 
-    {% for item in questions_with_answers %}
-    <div class="question-container" style="display: {% if forloop.first %}block{% else %}none{% endif %};">
-        <h1>Question {{ forloop.counter }}/5:</h1>
-        <p>{{ item.question.text_quiz }}</p>
-        <ul class="answers-list">
-            {% for answer in item.answers %}
-                <li><button class="answer-button" data-correct-answer="{{ item.question.correct_answer }}">{{ answer }}</button></li>
-            {% endfor %}
-        </ul>
-        <div class="message"></div>
+    <h1>Random Quiz</h1>
+<div id="quizContainer">
+  {% for data in quiz_data %}
+  <div class="questionContainer">
+    <p>{{ data.question }}</p>
+    {% for answer in data.answers %}
+    <a href="#" class="answerLink" data-correct="{{ answer.is_correct }}">{{ answer.text_answer }}</a><br>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+<button id="nextButton">Next</button>
+    <p style="text-align: center" id="finishText">Finish the quiz.</p>
+    <div style="text-align: center;"  id="results"></div>
+    <div class="content-align"><a href="../start_quiz/" id="retry" class="btn-quiz">Start another.</a>
     </div>
-{% endfor %}
+    <button id="submitButton">Submit</button>
+
 
     <script>
-        // Cod JavaScript pentru manipularea afișării întrebărilor și răspunsurilor
+        var correctAnswers = []; // Listă pentru a ține evidența răspunsurilor corecte
+var currentQuestionIndex = 0; // Variabilă pentru a ține evidența indexului întrebării curente
+var questionContainers = document.querySelectorAll('.questionContainer');
+var nextButton = document.getElementById('nextButton');
+var submitButton = document.getElementById('submitButton');
+var finishText = document.getElementById('finishText');
+var results = document.getElementById('results');
+var retryButton = document.getElementById('retry');
 
-        var questionContainers = document.querySelectorAll('.question-container');
-        var currentQuestionIndex = 0;
+function showQuestion(index) {
+  // Ascundem toate întrebările
+  questionContainers.forEach(function(container) {
+    container.style.display = 'none';
+  });
 
-        var answerButtons = document.querySelectorAll('.answer-button');
+  // Afișăm întrebarea și răspunsurile pentru indexul dat
+  if (index < questionContainers.length) {
+    questionContainers[index].style.display = 'block';
+  }
 
-        answerButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var selectedAnswer = this.textContent;
-                var correctAnswer = this.getAttribute('data-correct-answer');
-                console.log("Correct Answer:", correctAnswer); // Adaugă această linie pentru debugare
+  // Afișăm butonul "Submit" doar la ultima întrebare și butonul "Next" în celelalte cazuri
+  if (index === questionContainers.length ) {
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'block';
+    finishText.style.display = 'block';
+    results.style.display = 'none';
+    retryButton.style.display = 'none';
+  } else {
+    nextButton.style.display = 'block';
+    submitButton.style.display = 'none';
+    finishText.style.display = 'none';
+    results.style.display = 'none';
+    retryButton.style.display = 'none';
+  }
+}
 
+function isAnswerSelected() {
+  // Verificăm dacă există vreun răspuns selectat în întrebarea curentă
+  var currentQuestionContainer = questionContainers[currentQuestionIndex];
+  return currentQuestionContainer.querySelector('.answerLink.selected') !== null;
+}
 
-                var messageElement = this.closest('.question-container').querySelector('.message');
-                var currentQuestionContainer = this.closest('.question-container');
+document.querySelectorAll('.answerLink').forEach(function(link) {
+  link.addEventListener('click', function(event) {
+    event.preventDefault();
 
-                if (selectedAnswer === correctAnswer) {
-                    showMessage(messageElement, 'Răspuns corect!');
-                    this.classList.remove('incorrect');
-                    this.classList.add('correct'); // Adaugă clasa 'correct' butonului
-                } else {
-                    showMessage(messageElement, 'Răspuns greșit! Răspunsul corect este: ' + correctAnswer);
-                    this.classList.remove('correct');
-                    this.classList.add('incorrect'); // Adaugă clasa 'incorrect' butonului
-                }
+    // Dezactivăm clasa selectată pentru toate butoanele din aceeași întrebare
+    var siblingLinks = this.parentNode.querySelectorAll('.answerLink');
+    siblingLinks.forEach(function(siblingLink) {
+      siblingLink.classList.remove('selected');
+    });
 
-                currentQuestionContainer.style.pointerEvents = 'none'; // Dezactivează click-urile butoanelor după răspuns
+    // Adăugăm clasa selectată doar butonului curent
+    this.classList.add('selected');
+  });
+});
 
-                var nextQuestionContainer = currentQuestionContainer.nextElementSibling;
-                if (nextQuestionContainer) {
-                    nextQuestionContainer.style.display = 'block';  // Afișează următoarea întrebare
-                } else {
-                    alert('Quiz-ul a luat sfârșit!');
-                }
-            });
-        });
+nextButton.addEventListener('click', function() {
+  // Verificăm dacă utilizatorul a selectat un răspuns
+  if (isAnswerSelected()) {
+    // Adăugăm răspunsul corect la lista de răspunsuri corecte, doar dacă există un răspuns corect selectat
+    var correctAnswerElement = questionContainers[currentQuestionIndex].querySelector('.answerLink.selected[data-correct="True"]');
+    if (correctAnswerElement) {
+      correctAnswers.push(correctAnswerElement.textContent);
+    }
 
-        function showMessage(element, message) {
-            element.textContent = message;
-        }
+    // Trecem la următoarea întrebare
+    currentQuestionIndex++;
+    showQuestion(currentQuestionIndex);
+
+    // Resetăm selecțiile pentru noua întrebare
+    document.querySelectorAll('.answerLink').forEach(function(link) {
+      link.classList.remove('selected');
+    });
+  } else {
+    // Dacă nu este selectat un răspuns, afișăm un mesaj de eroare
+    alert("You have to select one answer.");
+  }
+});
+
+submitButton.addEventListener('click', function() {
+  // Afișăm lungimea listei de răspunsuri corecte
+
+    results.textContent = "You got " + correctAnswers.length + " correct answers."
+    results.style.display = 'block';
+    finishText.style.display = 'none';
+    submitButton.style.display = 'none';
+    retryButton.style.display = 'block';
+});
+
+// Afișăm prima întrebare inițial
+showQuestion(currentQuestionIndex);
+
     </script>
-
 </body>
 </html>
 

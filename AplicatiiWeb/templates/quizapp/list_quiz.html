@@ -8,24 +8,30 @@
 </head>
 <body>
     <div style="margin: 10px 125px 100px;
-                margin-top: 40px;">
+                margin-top: 15px;">
                         <h2 class="animate-charcter" style="text-align: center;
-                                                           margin-bottom: 40px;">Quiz List</h2>
+                                                           margin-bottom: 45px;">Quiz List</h2>
     <div class="table-container">
         <table class="table">
         <thead>
             <tr>
-                <th>Index</th>
-                <th>Quiz Name</th>
+                <th>Quiz ID
+                    <a href="?sort=id">Sort</a>
+                </th>
+                <th>Quiz Name
+                    <a href="?sort=text_quiz">Sort</a>
+                </th>
                 <th>Answers</th>
-                <th>Created at</th>
+                <th>Created at
+                    <a href="?sort=date">Sort</a>
+                </th>
                 <th style="text-align: center">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for question in list_quiz %}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
+                    <td>{{ question.id }}</td>
                     <td>{{ question.text_quiz }}</td>
                     <td>
                         <ul>
@@ -65,7 +71,7 @@
 <style>
 
         .pagination {
-            margin-top: 12px;
+            margin-top: 23px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -223,7 +229,6 @@ tbody {
 
 .animate-charcter
 {
-    margin-top: 30px;
    text-transform: uppercase;
   background-image: linear-gradient(
     -225deg,
